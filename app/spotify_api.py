@@ -67,3 +67,9 @@ class SpotifyApi(object):
         response = requests.get(url, params=params, headers=headers)
         return response.json()
 
+    def get_related_artists(self, artist_id):
+        url = self.get_url('v1/artists/{}/related-artists'.format(artist_id))
+        access_token = self.authorize()
+        headers = self.build_auth_header(access_token)
+        response = requests.get(url, headers=headers)
+        return response.json()
