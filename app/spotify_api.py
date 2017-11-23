@@ -5,9 +5,10 @@ from urllib.parse import urlunparse
 
 import requests
 
-from app.constants import CLIENT_ID, CLIENT_SECRET
+from app.keys import CLIENT_ID, CLIENT_SECRET
 
 
+# TODO: handle rate limits
 class SpotifyApi(object):
 
     BASE_URL_ACCOUNTS = 'accounts.spotify.com'
@@ -59,17 +60,24 @@ class SpotifyApi(object):
         finally:
             self.lock.release()
 
-    def search_artist(self, artist_name):
-        url = self.get_url('v1/search')
-        params = {'q': artist_name, 'type': 'artist'}
+    def get(self, url, params=None):
         access_token = self.authorize()
         headers = self.build_auth_header(access_token)
         response = requests.get(url, params=params, headers=headers)
+        return response
+
+    def search_artist(self, artist_name):
+        url = self.get_url('v1/search')
+        params = {'q': artist_name, 'type': 'artist'}
+        response = self.get(url, params)
+        return response.json()
+
+    def get_artists(self, artist_ids):
+        url = self.get_url('v1/artists?ids={}'.format(','.join(artist_ids)))
+        response = self.get(url)
         return response.json()
 
     def get_related_artists(self, artist_id):
         url = self.get_url('v1/artists/{}/related-artists'.format(artist_id))
-        access_token = self.authorize()
-        headers = self.build_auth_header(access_token)
-        response = requests.get(url, headers=headers)
+        response = self.get(url)
         return response.json()
