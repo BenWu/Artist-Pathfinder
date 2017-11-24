@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "echo \"Error: no test specified\" && exit 1"
+    "start": ""
   },
   "repository": "git+https://github.com/Ben-Wu/Spotify-Pathfinder.git",
   "keywords": [],
@@ -30,7 +30,10 @@
     "del": "^3.0.0",
     "node-sass": "^4.7.2",
     "react": "^16.1.1",
+    "react-dom": "^16.1.1",
+    "react-fabricjs": "^0.1.6",
     "sass-loader": "^6.0.6",
-    "style-loader": "^0.19.0"
+    "style-loader": "^0.19.0",
+    "xhr": "^2.4.0"
   }
 }

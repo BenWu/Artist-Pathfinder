@@ -1,6 +1,6 @@
-from flask import render_template
+from flask import render_template, jsonify
 
-from pathfinder import app
+from pathfinder import app, api
 
 
 @app.route('/')
@@ -14,5 +14,8 @@ def test():
     return 'l'
 
 
-if __name__ == '__main__':
-    app.run(debug=True)
+@app.route('/search/<artist_name>/')
+def search_artist(artist_name):
+    results = api.search_artist(artist_name)
+    return jsonify(results)
+
