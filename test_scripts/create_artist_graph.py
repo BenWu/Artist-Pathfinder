@@ -1,7 +1,7 @@
 import argparse
 
-from app.pathfinder import build_graph, find_path_from_graph
-from app.spotify_api import SpotifyApi
+from pathfinder.pathfind import build_graph, find_path_from_graph
+from pathfinder.spotify_api import SpotifyApi
 
 
 def parse_args():

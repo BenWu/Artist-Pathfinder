@@ -1,8 +1,4 @@
-from flask import Flask, redirect, url_for
-
-from app import spotify_api
-
-app = Flask(__name__)
+from pathfinder import app
 
 
 @app.route('/')
@@ -11,5 +7,10 @@ def hello_world():
     return 'Hello World!'
 
 
+@app.route('/test')
+def test():
+    return 'l'
+
+
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)

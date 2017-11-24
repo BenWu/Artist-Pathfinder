@@ -5,7 +5,7 @@ from urllib.parse import urlunparse
 
 import requests
 
-from app.keys import CLIENT_ID, CLIENT_SECRET
+from pathfinder.keys import CLIENT_ID, CLIENT_SECRET
 
 
 # TODO: handle rate limits

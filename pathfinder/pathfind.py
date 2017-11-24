@@ -50,3 +50,7 @@ def find_path_from_graph(source_id, dest_id, graph):
         if not found:
             return None
     return reversed(path)
+
+
+def test():
+    return 'test'
