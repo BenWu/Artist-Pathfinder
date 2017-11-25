@@ -5,6 +5,7 @@ __version__ = '0.1'
 setup(
     name='pathfinder',
     version=__version__,
+    author='Ben Wu',
     url='https://github.com/Ben-Wu/Spotify-Pathfinder',
     packages=find_packages(),
     install_requires=[
