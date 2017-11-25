@@ -21,7 +21,6 @@ class SearchField extends React.Component {
             return;
         }
         this.setState({selectedArtist: ''});
-        console.log('Searching for ' + name);
         xhr.get({uri: `/search/${name}`}, (err, resp, body) => {
             if (err) {
                 console.log(err);
@@ -33,12 +32,12 @@ class SearchField extends React.Component {
         });
     }
 
-    selectSearchResult(id) {
-        console.log(id);
+    selectSearchResult(id, name) {
         this.setState({selectedArtist: id});
+        this.props.onSelectArtist(id, name);
     }
 
-    renderResults() {;
+    renderResults() {
         const results = this.state.results;
         if (!results) {
             return;
@@ -68,7 +67,7 @@ class SearchField extends React.Component {
             return (
                 <div key={this.state.selectedArtist + artist['id']}
                      className={`result col-sm-6 ${selected}`}
-                     onClick={this.selectSearchResult.bind(this, artist['id'])}>
+                     onClick={this.selectSearchResult.bind(this, artist['id'], artist['name'])}>
                     {image ? <img className='thumb' src={image}/>
                         : <img className='thumb'/>}
                     <span className='name'>{artist['name']}</span>
