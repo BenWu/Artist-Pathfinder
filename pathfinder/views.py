@@ -1,7 +1,10 @@
-from flask import render_template, jsonify, Response
+from flask import render_template, jsonify
 from flask_socketio import emit
 
 from pathfinder import app, api, socketio
+from pathfinder.pathfind import build_graph_generator, find_path_from_graph
+
+log = app.logger
 
 
 @app.route('/')
@@ -17,23 +20,27 @@ def test():
 
 @socketio.on('connect', namespace='/graph')
 def socket_connect():
-    print('Client connected')
+    log.info('Client connected')
     emit('response', {'data': 'test'})
 
 
 @socketio.on('disconnect', namespace='/graph')
 def socket_disconnect():
-    print('Client disconnected')
+    log.info('Client disconnected')
 
 
-@socketio.on('test', namespace='/graph')
-def socket_send():
-    emit('response', {'data': 'test'})
-
-
-@socketio.on('test', namespace='/graph')
-def socket_receive(msg):
-    print(msg)
+@socketio.on('start', namespace='/graph')
+def start_graph_search(data):
+    log.info('start_graph_search: {}'.format(data))
+    for result in build_graph_generator(
+            data['rootId'], data['endId'], api, 1000):
+        log.info(result)
+        if result['type'] == 0:
+            emit('update', {'aid': result['aid'], 'related': result['related']},
+                 broadcast=True)
+        elif result['type'] == 1:
+            emit('result', {'found': result['path_found'],
+                            'graph': result['graph']})
 
 
 @app.route('/search/<artist_name>/')

@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import io from 'socket.io-client';
-import xhr from 'xhr';
 
 import SearchField from './SearchField.jsx'
 
@@ -11,15 +10,27 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
+
+        socket.on('update', (data) => {
+            console.log(data);
+        });
         socket.on('response', (msg) => {
            console.log(msg);
         });
+        socket.on('result', (data) => {
+            console.log(data);
+        });
+
+        this.startGraphSearch = this.startGraphSearch.bind(this);
     }
 
     startGraphSearch() {
-        xhr.get({uri: '/test'}, (err, resp, body) => {
-            console.log(JSON.parse(body));
-        });
+        const rootId = this.state.startId;
+        const endId = this.state.endId;
+
+        if (rootId && endId) {
+            socket.emit('start', {rootId: rootId, endId: endId});
+        }
     }
 
     render() {

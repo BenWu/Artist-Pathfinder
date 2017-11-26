@@ -21,7 +21,7 @@ class SearchField extends React.Component {
             return;
         }
         this.setState({selectedArtist: ''});
-        xhr.get({uri: `/search/${name}`}, (err, resp, body) => {
+        xhr.get({uri: `/search/${name}/`}, (err, resp, body) => {
             if (err) {
                 console.log(err);
             } else {
