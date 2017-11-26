@@ -19,6 +19,7 @@ class App extends React.Component {
         });
         socket.on('result', (data) => {
             console.log(data);
+            this.setState({searching: false});
         });
 
         this.startGraphSearch = this.startGraphSearch.bind(this);
@@ -27,13 +28,31 @@ class App extends React.Component {
     startGraphSearch() {
         const rootId = this.state.startId;
         const endId = this.state.endId;
-
         if (rootId && endId) {
+            this.setState({searching: true});
             socket.emit('start', {rootId: rootId, endId: endId});
         }
     }
 
     render() {
+        let button;
+        if (this.state.searching) {
+            button = (
+                <button className='btn btn-success confirm disabled' onClick={this.startGraphSearch}>
+                    Search in Progress
+                </button>);
+        } else if (this.state.startId && this.state.endId) {
+            button = (
+                <button className='btn btn-success confirm' onClick={this.startGraphSearch}>
+                    Find Path From {this.state.startName} to {this.state.endName}
+                </button>);
+        } else {
+            button = (
+                <button className='btn btn-success confirm disabled'>
+                    Select Two Artists Above
+                </button>);
+        }
+
         return (
             <div className="container main">
                 <h2>Spotify Pathfinder</h2>
@@ -48,13 +67,7 @@ class App extends React.Component {
                                  this.setState({endId: id, endName: name})
                              }}/>
                 <hr/>
-                {this.state.startId && this.state.endId
-                    ? (<button className='btn btn-success confirm' onClick={this.startGraphSearch}>
-                           Find Path From {this.state.startName} to {this.state.endName}
-                       </button>)
-                    : (<button className='btn btn-success confirm disabled'>
-                           Select Two Artists Above
-                       </button>)}
+                {button}
             </div>
         );
     }
