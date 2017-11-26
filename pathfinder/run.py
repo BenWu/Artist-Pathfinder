@@ -1,6 +1,6 @@
-from pathfinder import app
+from pathfinder import app, socketio
 
 import pathfinder.views
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    socketio.run(app, debug=True)

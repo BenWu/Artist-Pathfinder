@@ -1,6 +1,7 @@
-from flask import render_template, jsonify
+from flask import render_template, jsonify, Response
+from flask_socketio import emit
 
-from pathfinder import app, api
+from pathfinder import app, api, socketio
 
 
 @app.route('/')
@@ -11,7 +12,28 @@ def index():
 
 @app.route('/test')
 def test():
-    return 'l'
+    return 'test'
+
+
+@socketio.on('connect', namespace='/graph')
+def socket_connect():
+    print('Client connected')
+    emit('response', {'data': 'test'})
+
+
+@socketio.on('disconnect', namespace='/graph')
+def socket_disconnect():
+    print('Client disconnected')
+
+
+@socketio.on('test', namespace='/graph')
+def socket_send():
+    emit('response', {'data': 'test'})
+
+
+@socketio.on('test', namespace='/graph')
+def socket_receive(msg):
+    print(msg)
 
 
 @app.route('/search/<artist_name>/')

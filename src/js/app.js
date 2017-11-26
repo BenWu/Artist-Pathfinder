@@ -1,12 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import io from 'socket.io-client';
+import xhr from 'xhr';
 
 import SearchField from './SearchField.jsx'
+
+const socket = io.connect('http://localhost:5000/graph');
 
 class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
+        socket.on('response', (msg) => {
+           console.log(msg);
+        });
+    }
+
+    startGraphSearch() {
+        xhr.get({uri: '/test'}, (err, resp, body) => {
+            console.log(JSON.parse(body));
+        });
     }
 
     render() {
@@ -25,7 +38,7 @@ class App extends React.Component {
                              }}/>
                 <hr/>
                 {this.state.startId && this.state.endId
-                    ? (<button className='btn btn-success confirm'>
+                    ? (<button className='btn btn-success confirm' onClick={this.startGraphSearch}>
                            Find Path From {this.state.startName} to {this.state.endName}
                        </button>)
                     : (<button className='btn btn-success confirm disabled'>
