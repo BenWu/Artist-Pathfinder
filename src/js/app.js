@@ -2,7 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import io from 'socket.io-client';
 
-import SearchField from './SearchField.jsx'
+import Graph from './Graph.jsx';
+import SearchField from './SearchField.jsx';
 
 const socket = io.connect('http://localhost:5000/graph');
 
@@ -68,6 +69,10 @@ class App extends React.Component {
                              }}/>
                 <hr/>
                 {button}
+                <div>
+                    <hr/>
+                    <Graph/>
+                </div>
             </div>
         );
     }
