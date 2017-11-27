@@ -6,19 +6,29 @@ import ArtistNode from './ArtistNode.jsx';
 class Graph extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {size: 1000};
     }
 
     render() {
+        const l = this.props.graph.length;
         return (
-            <div className='graph' style={{width: this.state.size}}>
-            <Stage width={this.state.size} height={this.state.size}>
+            <div className='graph' style={{width: this.props.size}}>
+            <Stage width={this.props.size} height={this.props.size}>
                 <Layer>
-                    <ArtistNode x={50} y={50} radius={30}
-                                text={'Test 1'}/>
-
-                    <ArtistNode x={250} y={250} radius={30}
-                                text={'Test 2'}/>
+                    {this.props.graph.map((artist) => {
+                        const spacing = 200;
+                        const margin = 40;
+                        const randX = Math.random() * 30;
+                        const randY = Math.random() * 30;
+                        return (
+                          <ArtistNode
+                              key={artist['aid']}
+                              x={(l * spacing + margin) % (this.props.size - margin) + randX}
+                              y={margin + Math.floor(l * spacing / (this.props.size - margin))
+                              * spacing + randY}
+                              radius={30}
+                              text={artist['name']}/>
+                        );
+                    })}
                 </Layer>
             </Stage>
             </div>

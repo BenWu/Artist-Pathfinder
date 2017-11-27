@@ -10,10 +10,13 @@ const socket = io.connect('http://localhost:5000/graph');
 class App extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {graph: []};
 
         socket.on('update', (data) => {
             console.log(data);
+            const graph = this.state.graph.slice();
+            graph.push(data);
+            this.setState({graph});
         });
         socket.on('response', (msg) => {
            console.log(msg);
@@ -29,31 +32,32 @@ class App extends React.Component {
     startGraphSearch() {
         const rootId = this.state.startId;
         const endId = this.state.endId;
-        if (rootId && endId) {
-            this.setState({searching: true});
+        if (rootId && endId && !this.state.searching) {
+            this.setState({searching: true, graph: []});
             socket.emit('start', {rootId: rootId, endId: endId});
         }
     }
 
-    render() {
-        let button;
+    renderConfirmButton() {
         if (this.state.searching) {
-            button = (
+            return (
                 <button className='btn btn-success confirm disabled' onClick={this.startGraphSearch}>
                     Search in Progress
                 </button>);
         } else if (this.state.startId && this.state.endId) {
-            button = (
+            return (
                 <button className='btn btn-success confirm' onClick={this.startGraphSearch}>
                     Find Path From {this.state.startName} to {this.state.endName}
                 </button>);
         } else {
-            button = (
+            return (
                 <button className='btn btn-success confirm disabled'>
                     Select Two Artists Above
                 </button>);
         }
+    }
 
+    render() {
         return (
             <div>
                 <div className="container main">
@@ -69,10 +73,10 @@ class App extends React.Component {
                                      this.setState({endId: id, endName: name})
                                  }}/>
                     <hr/>
-                    {button}
+                    {this.renderConfirmButton()}
                     <hr/>
                 </div>
-                <Graph/>
+                <Graph graph={this.state.graph} size={2000}/>
             </div>
         );
     }
