@@ -1,29 +1,27 @@
 import React from 'react';
-import {Layer, Rect, Stage} from 'react-konva';
+import {Layer, Stage} from 'react-konva';
+
+import ArtistNode from './ArtistNode.jsx';
 
 class Graph extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {color: 'green'};
+        this.state = {size: 1000};
     }
 
     render() {
         return (
-            <Stage width={700} height={700}>
+            <div className='graph' style={{width: this.state.size}}>
+            <Stage width={this.state.size} height={this.state.size}>
                 <Layer>
-                    <Rect
-                        x={10}
-                        y={10}
-                        width={50}
-                        height={50}
-                        fill={this.state.color}
-                        shadowBlur={5}
-                        onClick={() => {
-                            this.setState({color: window.Konva.Util.getRandomColor()});
-                        }}
-                    />
+                    <ArtistNode x={50} y={50} radius={30}
+                                text={'Test 1'}/>
+
+                    <ArtistNode x={250} y={250} radius={30}
+                                text={'Test 2'}/>
                 </Layer>
             </Stage>
+            </div>
         );
     }
 }
