@@ -15,6 +15,12 @@ class Graph extends React.Component {
     this.updateEdges = this.updateEdges.bind(this);
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.path.length !== this.props.path.length) {
+      this.updateEdges();
+    }
+  }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.graph.length === 0) {
       this.setState({artistsInGraph: new Set(), nodes: [], edges: [], nodeCoords: {}});
@@ -59,10 +65,21 @@ class Graph extends React.Component {
           const theta = Math.atan2((endY - startY), (endX - startX));
           endX = endX - (NODE_SIZE + 3) * Math.cos(theta) - startX;
           endY = endY - (NODE_SIZE + 3) * Math.sin(theta) - startY;
+          let highlighted = false;
+          const path = this.props.path;
+          if (path && path.length) {
+            for (let i = 0 ; i < path.length - 1 ; i++) {
+              if (path[i] === aid && path[i + 1] === relAid) {
+                highlighted = true;
+                break;
+              }
+            }
+          }
           edges.push({
             startAid: n.aid, endAid: relAid,
             startX, startY,
             endX, endY,
+            highlighted,
           });
         });
     });
@@ -89,9 +106,9 @@ class Graph extends React.Component {
                 points={[0, 0, edge.endX, edge.endY]}
                 pointerLength={8}
                 pointerWidth={8}
-                fill={'#008ee4'}
-                stroke={'#008ee4'}
-                strokeWidth={2}
+                fill={'#000000'}
+                stroke={edge.highlighted ? '#ffff00' : '#008ee4'}
+                strokeWidth={edge.highlighted ? 4 : 2}
               />
             ))}
             {this.state.nodes.map(node => (

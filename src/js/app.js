@@ -78,7 +78,7 @@ class App extends React.Component {
       <div>
         <h3>Path found in {this.state.searches} searches</h3>
         {this.state.path.map(aid => (
-          <p>
+          <p key={aid}>
             {this.state.graph.filter(n => n.aid === aid)[0].name}
           </p>
         ))}
@@ -108,7 +108,9 @@ class App extends React.Component {
         <div className='results'>
           {this.renderResults()}
         </div>
-        {this.state.graph.length ? <Graph graph={this.state.graph} size={window.innerWidth}/> : ''}
+        {this.state.graph.length ? <Graph graph={this.state.graph}
+                                          size={window.innerWidth}
+                                          path={this.state.path}/> : ''}
       </div>
     );
   }
