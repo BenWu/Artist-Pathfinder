@@ -18,6 +18,8 @@ class App extends React.Component {
             startName: "Taylor Swift",
         };
 
+        this.startGraphSearch = this.startGraphSearch.bind(this);
+
         socket.on('update', (data) => {
             console.log(data);
             const graph = this.state.graph.slice();
@@ -31,8 +33,6 @@ class App extends React.Component {
             console.log(data);
             this.setState({searching: false});
         });
-
-        this.startGraphSearch = this.startGraphSearch.bind(this);
     }
 
     startGraphSearch() {
@@ -50,17 +50,17 @@ class App extends React.Component {
                 <button className='btn btn-success confirm disabled' onClick={this.startGraphSearch}>
                     Search in Progress
                 </button>);
-        } else if (this.state.startId && this.state.endId) {
+        }
+        if (this.state.startId && this.state.endId) {
             return (
                 <button className='btn btn-success confirm' onClick={this.startGraphSearch}>
                     Find Path From {this.state.startName} to {this.state.endName}
                 </button>);
-        } else {
-            return (
-                <button className='btn btn-success confirm disabled'>
-                    Select Two Artists Above
-                </button>);
         }
+        return (
+            <button className='btn btn-success confirm disabled'>
+                Select Two Artists Above
+            </button>);
     }
 
     render() {
