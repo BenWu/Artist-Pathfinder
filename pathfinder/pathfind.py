@@ -46,14 +46,14 @@ def build_graph_generator(source_id, dest_id, api, searches=100):
     """
     if source_id == dest_id:
         yield {'type': 1, 'path_found': True, 'graph': {source_id: []}}
-
+    searchesLeft = searches
     # directed graph representation, key is artist id, value is list of related
     graph = {}
     # BFS queue
     queue = [source_id]
     path_found = False
-    while queue and searches > 0:
-        searches -= 1
+    while queue and searchesLeft > 0:
+        searchesLeft -= 1
         aid = queue[0]
         related_ids = get_related(aid, api)
         yield {'type': 0, 'aid': aid, 'related': related_ids}
@@ -67,7 +67,8 @@ def build_graph_generator(source_id, dest_id, api, searches=100):
                 queue.append(related_id)
         queue.pop(0)
 
-    yield {'type': 1, 'path_found': path_found, 'graph': graph}
+    yield {'type': 1, 'path_found': path_found,
+           'searches': searches - searchesLeft , 'graph': graph}
 
 
 def get_related(aid, api):
@@ -98,4 +99,4 @@ def find_path_from_graph(source_id, dest_id, graph):
                 break
         if not found:
             return None
-    return reversed(path)
+    return list(reversed(path))

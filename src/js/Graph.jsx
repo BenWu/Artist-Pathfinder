@@ -79,7 +79,7 @@ class Graph extends React.Component {
   render() {
     return (
       <div className='graph' style={{width: this.props.size}}>
-        <Stage width={this.props.size} height={this.props.size}>
+        <Stage width={this.props.size} height={this.props.size * 1.5}>
           <Layer>
             {this.state.edges.map(edge => (
               <Arrow

@@ -25,10 +25,13 @@ class App extends React.Component {
       graph.push(data);
       this.setState({graph});
     });
-    socket.on('response', (msg) => {
-    });
     socket.on('result', (data) => {
-      this.setState({searching: false});
+      this.setState({
+        searching: false,
+        pathFound: data.found,
+        path: data.path,
+        searches: data.searches,
+      });
     });
   }
 
@@ -36,7 +39,7 @@ class App extends React.Component {
     const rootId = this.state.startId;
     const endId = this.state.endId;
     if (rootId && endId && !this.state.searching) {
-      this.setState({searching: true, graph: []});
+      this.setState({searching: true, graph: [], pathFound: false, path: []});
       socket.emit('start', {rootId: rootId, endId: endId});
     }
   }
@@ -60,6 +63,29 @@ class App extends React.Component {
       </button>);
   }
 
+  renderResults() {
+    if (this.state.searching || this.state.pathFound === undefined) {
+      return;
+    }
+    if (!this.state.pathFound) {
+      return (
+        <h3>
+          A path was not found from {this.state.startName} and {this.state.endName} in {this.state.searches} searches
+        </h3>
+      );
+    }
+    return (
+      <div>
+        <h3>Path found in {this.state.searches} searches</h3>
+        {this.state.path.map(aid => (
+          <p>
+            {this.state.graph.filter(n => n.aid === aid)[0].name}
+          </p>
+        ))}
+      </div>
+    );
+  }
+
   render() {
     return (
       <div>
@@ -79,7 +105,10 @@ class App extends React.Component {
           {this.renderConfirmButton()}
           <hr/>
         </div>
-        {this.state.graph.length ? <Graph graph={this.state.graph} size={2000}/> : ''}
+        <div className='results'>
+          {this.renderResults()}
+        </div>
+        {this.state.graph.length ? <Graph graph={this.state.graph} size={window.innerWidth}/> : ''}
       </div>
     );
   }

@@ -23,7 +23,6 @@ def test():
 @socketio.on('connect', namespace='/graph')
 def socket_connect():
     log.info('Client connected')
-    emit('response', {'data': 'test'})
 
 
 @socketio.on('disconnect', namespace='/graph')
@@ -56,8 +55,15 @@ def start_graph_search(data):
             if len(artists_to_send) > 0:
                 emit_update(artists_to_send)
                 artists_to_send = []
-            emit('result', {'found': result['path_found'],
-                            'graph': result['graph']})
+            emit('result', {
+                'found': result['path_found'],
+                'searches': result['searches'],
+                'path': find_path_from_graph(
+                    data['rootId'],
+                    data['endId'],
+                    result['graph']
+                ) if result['path_found'] else []
+            })
 
 
 @app.route('/search/<artist_name>/')
