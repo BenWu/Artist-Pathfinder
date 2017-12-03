@@ -21,16 +21,13 @@ class App extends React.Component {
     this.startGraphSearch = this.startGraphSearch.bind(this);
 
     socket.on('update', (data) => {
-      console.log(data);
       const graph = this.state.graph.slice();
       graph.push(data);
       this.setState({graph});
     });
     socket.on('response', (msg) => {
-      console.log(msg);
     });
     socket.on('result', (data) => {
-      console.log(data);
       this.setState({searching: false});
     });
   }
