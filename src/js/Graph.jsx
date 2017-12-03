@@ -15,7 +15,9 @@ class Graph extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.graph.length < nextProps.graph.length) {
+    if (nextProps.graph.length === 0) {
+      this.setState({artistsInGraph: new Set(), nodes: [], edges: [], nodeCoords: {}});
+    } else if (this.props.graph.length < nextProps.graph.length) {
       const l = this.state.nodes.length;
       const newNodes = nextProps.graph
         .filter(n => !this.state.artistsInGraph.has(n.aid))
@@ -47,13 +49,17 @@ class Graph extends React.Component {
       n.related
         .filter(aid => this.state.artistsInGraph.has(aid))
         .forEach(relAid => {
+          let startX = n.x + NODE_SIZE;
+          let startY = n.y + NODE_SIZE;
+          let endX = this.state.nodeCoords[relAid].x + NODE_SIZE;
+          let endY = this.state.nodeCoords[relAid].y + NODE_SIZE;
+          const theta = Math.atan2((endY - startY), (endX - startX));
+          endX = endX - (NODE_SIZE + 3) * Math.cos(theta) - startX;
+          endY = endY - (NODE_SIZE + 3) * Math.sin(theta) - startY;
           edges.push({
-            startAid: n.aid,
-            endAid: relAid,
-            startX: n.x,
-            startY: n.y,
-            endX: this.state.nodeCoords[relAid].x,
-            endY: this.state.nodeCoords[relAid].y,
+            startAid: n.aid, endAid: relAid,
+            startX, startY,
+            endX, endY,
           });
         });
     });
@@ -76,12 +82,7 @@ class Graph extends React.Component {
                 key={`${edge.startAid}-${edge.endAid}`}
                 x={edge.startX}
                 y={edge.startY}
-                points={[
-                  NODE_SIZE,
-                  NODE_SIZE,
-                  edge.endX - edge.startX + NODE_SIZE,
-                  edge.endY - edge.startY + NODE_SIZE
-                ]}
+                points={[0, 0, edge.endX, edge.endY]}
                 pointerLength={8}
                 pointerWidth={8}
                 fill={'#ffcf3b'}

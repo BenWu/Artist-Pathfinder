@@ -63,23 +63,23 @@ class App extends React.Component {
   render() {
     return (
       <div>
-          <div className="container main">
-              <h2>Spotify Pathfinder</h2>
-              <hr/>
-              <SearchField title="Start Artist" hint="Artist Name"
-                           onSelectArtist={(id, name) => {
-                             this.setState({startId: id, startName: name})
-                           }}/>
-              <hr/>
-              <SearchField title="Artist to Find" hint="Artist Name"
-                           onSelectArtist={(id, name) => {
-                             this.setState({endId: id, endName: name})
-                           }}/>
-              <hr/>
-            {this.renderConfirmButton()}
-              <hr/>
-          </div>
-          <Graph graph={this.state.graph} size={2000}/>
+        <div className="container main">
+          <h2>Spotify Pathfinder</h2>
+          <hr/>
+          <SearchField title="Start Artist" hint="Artist Name"
+                       onSelectArtist={(id, name) => {
+                         this.setState({startId: id, startName: name})
+                       }}/>
+          <hr/>
+          <SearchField title="Artist to Find" hint="Artist Name"
+                       onSelectArtist={(id, name) => {
+                         this.setState({endId: id, endName: name})
+                       }}/>
+          <hr/>
+          {this.renderConfirmButton()}
+          <hr/>
+        </div>
+        <Graph graph={this.state.graph} size={2000}/>
       </div>
     );
   }
