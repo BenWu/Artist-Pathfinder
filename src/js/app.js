@@ -10,13 +10,7 @@ const socket = io.connect('http://localhost:5000/graph');
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      graph: [],
-      endId: "4u5smJBskI6Adzv08PuiUP",
-      endName: "Kiiara",
-      startId: "06HL4z0CvFAxyc27GXpf02",
-      startName: "Taylor Swift",
-    };
+    this.state = {graph: []};
 
     this.startGraphSearch = this.startGraphSearch.bind(this);
 
