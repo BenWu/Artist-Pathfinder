@@ -6,15 +6,22 @@ import ArtistNode from './ArtistNode.jsx';
 class Graph extends React.Component {
     constructor(props) {
         super(props);
+
+        this.moveNode = this.moveNode.bind(this);
+    }
+
+    moveNode(aid, e) {
+        //console.log('\n\n');
+        //console.log(aid);
+        //console.log(e);
     }
 
     render() {
-        const l = this.props.graph.length;
         return (
             <div className='graph' style={{width: this.props.size}}>
             <Stage width={this.props.size} height={this.props.size}>
                 <Layer>
-                    {this.props.graph.map((artist) => {
+                    {this.props.graph.map((artist, i) => {
                         const spacing = 200;
                         const margin = 40;
                         const randX = Math.random() * 30;
@@ -22,9 +29,10 @@ class Graph extends React.Component {
                         return (
                           <ArtistNode
                               key={artist['aid']}
-                              x={(l * spacing + margin) % (this.props.size - margin) + randX}
-                              y={margin + Math.floor(l * spacing / (this.props.size - margin))
-                              * spacing + randY}
+                              aid={artist['aid']}
+                              onDragged={this.moveNode}
+                              x={(i * spacing + margin) % (this.props.size - margin) + randX}
+                              y={margin + Math.floor(i * spacing / (this.props.size - margin)) * spacing + randY}
                               radius={30}
                               text={artist['name']}/>
                         );

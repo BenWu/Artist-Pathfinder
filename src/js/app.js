@@ -12,8 +12,8 @@ class App extends React.Component {
         super(props);
         this.state = {
             graph: [],
-            endId: "4u5smJBskI6Adzv08PuiUP",
-            endName: "Kiiara",
+            endId: "6JL8zeS1NmiOftqZTRgdTz",
+            endName: "Meghan Trainor",
             startId: "06HL4z0CvFAxyc27GXpf02",
             startName: "Taylor Swift",
         };
