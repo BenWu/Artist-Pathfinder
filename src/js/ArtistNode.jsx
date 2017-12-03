@@ -6,7 +6,7 @@ class ArtistNode extends React.Component {
     const radius = this.props.radius;
     return (
       <Group draggable='true'
-             onDragMove={(e) => {this.props.onDragged(this.props.aid, e)}}>
+             onDragMove={e => {this.props.onDragged(this.props.aid, e)}}>
         <Circle x={this.props.x + radius}
                 y={this.props.y + radius}
                 radius={this.props.radius}

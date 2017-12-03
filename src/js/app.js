@@ -12,8 +12,8 @@ class App extends React.Component {
     super(props);
     this.state = {
       graph: [],
-      endId: "6JL8zeS1NmiOftqZTRgdTz",
-      endName: "Meghan Trainor",
+      endId: "4u5smJBskI6Adzv08PuiUP",
+      endName: "Kiiara",
       startId: "06HL4z0CvFAxyc27GXpf02",
       startName: "Taylor Swift",
     };
@@ -79,7 +79,7 @@ class App extends React.Component {
           {this.renderConfirmButton()}
           <hr/>
         </div>
-        <Graph graph={this.state.graph} size={2000}/>
+        {this.state.graph.length ? <Graph graph={this.state.graph} size={2000}/> : ''}
       </div>
     );
   }

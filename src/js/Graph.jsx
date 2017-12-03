@@ -12,6 +12,7 @@ class Graph extends React.Component {
     this.state = {artistsInGraph: new Set(), nodes: [], edges: [], nodeCoords: {}};
 
     this.moveNode = this.moveNode.bind(this);
+    this.updateEdges = this.updateEdges.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -49,10 +50,12 @@ class Graph extends React.Component {
       n.related
         .filter(aid => this.state.artistsInGraph.has(aid))
         .forEach(relAid => {
-          let startX = n.x + NODE_SIZE;
-          let startY = n.y + NODE_SIZE;
-          let endX = this.state.nodeCoords[relAid].x + NODE_SIZE;
-          let endY = this.state.nodeCoords[relAid].y + NODE_SIZE;
+          const aid = n.aid;
+          const nodeCoords = this.state.nodeCoords;
+          let startX = nodeCoords[aid].x + NODE_SIZE;
+          let startY = nodeCoords[aid].y + NODE_SIZE;
+          let endX = nodeCoords[relAid].x + NODE_SIZE;
+          let endY = nodeCoords[relAid].y + NODE_SIZE;
           const theta = Math.atan2((endY - startY), (endX - startX));
           endX = endX - (NODE_SIZE + 3) * Math.cos(theta) - startX;
           endY = endY - (NODE_SIZE + 3) * Math.sin(theta) - startY;
@@ -67,9 +70,10 @@ class Graph extends React.Component {
   }
 
   moveNode(aid, e) {
-    //console.log('\n\n');
-    //console.log(aid);
-    //console.log(e);
+    const nodeCoords = this.state.nodeCoords;
+    nodeCoords[aid].x = nodeCoords[aid].x + e.evt.movementX;
+    nodeCoords[aid].y = nodeCoords[aid].y + e.evt.movementY;
+    this.setState({nodeCoords}, this.updateEdges);
   }
 
   render() {
@@ -85,8 +89,8 @@ class Graph extends React.Component {
                 points={[0, 0, edge.endX, edge.endY]}
                 pointerLength={8}
                 pointerWidth={8}
-                fill={'#ffcf3b'}
-                stroke={'#ffcf3b'}
+                fill={'#008ee4'}
+                stroke={'#008ee4'}
                 strokeWidth={2}
               />
             ))}
