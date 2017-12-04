@@ -1,6 +1,8 @@
 # Spotify Pathfinder
 Create a graph of related artists to find the shortest path between two given artists.
 
+![Screenshot](/images/Screenshot_1.png)
+
 ### Install
 
 Run setup script to install node and python dependencies (should use `virtualenv`):
@@ -12,7 +14,7 @@ $ ./setup.sh
 
 Use gulp to compile frontend files and watch for changes:
 ```sh
-$ gulp
+$ npm run start
 ```
 
 Start server with `pathfinder/run.py`:
