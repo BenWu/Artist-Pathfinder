@@ -1,19 +1,14 @@
 {
-  "name": "SpotifyPathfinder",
-  "version": "0.1.0",
-  "description": "",
+  "name": "ArtistPathfinder",
+  "version": "1.0.0",
+  "description": "Create a graph of related artists to find the shortest path between two given artists.",
   "main": "index.js",
   "scripts": {
-    "start": "gulp"
+    "build": "gulp"
   },
   "repository": "git+https://github.com/Ben-Wu/Spotify-Pathfinder.git",
   "keywords": [],
   "author": "Ben Wu",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Ben-Wu/Spotify-Pathfinder/issues"
-  },
-  "homepage": "https://github.com/Ben-Wu/Spotify-Pathfinder#readme",
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
