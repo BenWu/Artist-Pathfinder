@@ -1,7 +1,7 @@
 # Artist Pathfinder
 Create a graph of related artists to find the shortest path between two given artists.
 
-![Screenshot](/images/Screenshot_1.png)
+![Screenshot](images/Screenshot_1.png)
 
 ### Setup
 
@@ -16,12 +16,17 @@ python setup.py develop
 
 ### Run
 
-Build js and watch for changes:
+Build js:
 ```sh
 npm run build
 ```
 
-Start server with `pathfinder/run.py`:
+Build js and watch for changes:
 ```sh
-python -m pathfinder.run
+npm run watch
+```
+
+Start server (running on port 5000):
+```sh
+npm run start
 ```

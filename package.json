@@ -2,9 +2,12 @@
   "name": "ArtistPathfinder",
   "version": "1.0.0",
   "description": "Create a graph of related artists to find the shortest path between two given artists.",
+  "license": "ISC",
   "main": "index.js",
   "scripts": {
-    "build": "gulp"
+    "build": "webpack",
+    "watch": "gulp",
+    "start": "python3 -m pathfinder.run"
   },
   "repository": "git+https://github.com/Ben-Wu/Spotify-Pathfinder.git",
   "keywords": [],

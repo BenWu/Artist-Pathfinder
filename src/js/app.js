@@ -42,18 +42,18 @@ class App extends React.Component {
     if (this.state.searching) {
       return (
         <button className='btn btn-success confirm disabled' onClick={this.startGraphSearch}>
-            Search in Progress
+          Search in Progress
         </button>);
     }
     if (this.state.startId && this.state.endId) {
       return (
         <button className='btn btn-success confirm' onClick={this.startGraphSearch}>
-            Find Path From {this.state.startName} to {this.state.endName}
+          Find Path From {this.state.startName} to {this.state.endName}
         </button>);
     }
     return (
       <button className='btn btn-success confirm disabled'>
-          Select Two Artists Above
+        Select Two Artists Above
       </button>);
   }
 
@@ -102,9 +102,8 @@ class App extends React.Component {
         <div className='results'>
           {this.renderResults()}
         </div>
-        {this.state.graph.length ? <Graph graph={this.state.graph}
-                                          size={window.innerWidth}
-                                          path={this.state.path}/> : ''}
+        {this.state.graph.length ? <Graph graph={this.state.graph} size={window.innerWidth}
+                                          path={this.state.path}/>: ''}
       </div>
     );
   }
