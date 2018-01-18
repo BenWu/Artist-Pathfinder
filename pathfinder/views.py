@@ -44,15 +44,15 @@ def start_graph_search(data):
             time.sleep(0.2)
 
     for result in build_graph_generator(
-            data['rootId'], data['endId'], api, 50):
+            data['rootId'], data['endId'], api, 100):
         log.info(result)
         if result['type'] == 0:
             artists_to_send.append(result)
-            if len(artists_to_send) > 5:
+            if len(artists_to_send):
                 emit_update(artists_to_send)
                 artists_to_send = []
         elif result['type'] == 1:
-            if len(artists_to_send) > 0:
+            if len(artists_to_send):
                 emit_update(artists_to_send)
                 artists_to_send = []
             emit('result', {
