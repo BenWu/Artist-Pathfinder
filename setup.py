@@ -9,7 +9,8 @@ setup(
     url='https://github.com/Ben-Wu/Spotify-Pathfinder',
     packages=find_packages(),
     install_requires=[
-        'Flask==0.12.2',
-        'requests==2.18.4',
+        'Flask==1.0.2',
+        'Flask-SocketIO==3.0.2',
+        'requests==2.19.1',
     ]
 )

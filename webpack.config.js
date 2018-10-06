@@ -10,7 +10,7 @@ module.exports = {
         ]
     },
     output: {
-        filename: '[name].js'
+        filename: './pathfinder/static/js/[name].js'
     },
     resolve: {
         extensions: ['.js', '.scss']

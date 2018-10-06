@@ -14,19 +14,21 @@ pip install -r requirements.txt
 python setup.py develop
 ```
 
+Copy `pathfinder/keys.template.py` to `pathfinder/keys.py` and insert Spotify API keys.
+
 ### Run
 
 Build js:
 ```sh
-npm run build
+make build
 ```
 
 Build js and watch for changes:
 ```sh
-npm run watch
+make watch
 ```
 
 Start server (running on port 5000):
 ```sh
-npm run start
+make start
 ```
